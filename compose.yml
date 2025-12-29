@@ -3,7 +3,6 @@ version: "3.8"
 services:
   db:
     image: satya678/python:dbimage
-    container_name: db
     ports:
       - "3306:3306"
     networks:
@@ -11,7 +10,6 @@ services:
 
   auth_service:
     image: satya678/python:authimage
-    container_name: auth_service
     ports:
       - "5001:5001"
     networks:
@@ -21,7 +19,6 @@ services:
 
   book_service:
     image: satya678/python:bookimage
-    container_name: book_service
     ports:
       - "5002:5002"
     networks:
@@ -31,7 +28,6 @@ services:
 
   borrow_service:
     image: satya678/python:borrowimage
-    container_name: borrow_service
     ports:
       - "5003:5003"
     networks:
@@ -41,7 +37,6 @@ services:
 
   frontend:
     image: satya678/python:appimage
-    container_name: frontend
     ports:
       - "5000:5000"
     networks:
