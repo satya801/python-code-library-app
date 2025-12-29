@@ -1,1 +1,56 @@
+version: "3.8"
 
+services:
+  db:
+    image: satya678/python:dbimage
+    container_name: db
+    ports:
+      - "3306:3306"
+    networks:
+      - mynet
+
+  auth_service:
+    image: satya678/python:authimage
+    container_name: auth_service
+    ports:
+      - "5001:5001"
+    networks:
+      - mynet
+    depends_on:
+      - db
+
+  book_service:
+    image: satya678/python:bookimage
+    container_name: book_service
+    ports:
+      - "5002:5002"
+    networks:
+      - mynet
+    depends_on:
+      - db
+
+  borrow_service:
+    image: satya678/python:borrowimage
+    container_name: borrow_service
+    ports:
+      - "5003:5003"
+    networks:
+      - mynet
+    depends_on:
+      - db
+
+  frontend:
+    image: satya678/python:appimage
+    container_name: frontend
+    ports:
+      - "5000:5000"
+    networks:
+      - mynet
+    depends_on:
+      - auth_service
+      - book_service
+      - borrow_service
+
+networks:
+  mynet:
+    driver: bridge
