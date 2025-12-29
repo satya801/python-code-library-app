@@ -6,46 +6,41 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - mynet
+      - selfnet
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   auth_service:
     image: satya678/python:authimage
     ports:
       - "5001:5001"
     networks:
-      - mynet
-    depends_on:
-      - db
+      - selfnet
 
   book_service:
     image: satya678/python:bookimage
     ports:
       - "5002:5002"
     networks:
-      - mynet
-    depends_on:
-      - db
+      - selfnet
 
   borrow_service:
     image: satya678/python:borrowimage
     ports:
       - "5003:5003"
     networks:
-      - mynet
-    depends_on:
-      - db
+      - selfnet
 
   frontend:
     image: satya678/python:appimage
     ports:
       - "5000:5000"
     networks:
-      - mynet
-    depends_on:
-      - auth_service
-      - book_service
-      - borrow_service
+      - selfnet
 
 networks:
-  mynet:
+  selfnet:
     driver: overlay
