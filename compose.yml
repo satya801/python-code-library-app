@@ -48,4 +48,4 @@ services:
 
 networks:
   mynet:
-    driver: bridge
+    driver: overlay
